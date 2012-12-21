@@ -25,11 +25,22 @@ set showmode						" Show current mode
 set wildchar=<TAB>					" start wild expansion (auto-completioin of filename) in the command line using <TAB>
 set wildmenu						" wild char completion menu
 set wildignore=*.o,*.class,*.pyc	" ignore these files while expanding wild chars
-set foldmethod=indent
+
+" folding settings
+set foldmethod=indent				" use indent for folding (python)
+set foldnestmax=1					" maximal level of folding
+" in normal mode open and close a fold with spacebar
+nnoremap <space> za
+" in visual mode open and close a fold with spacebar
+"vnoremap <space> zf
 
 
-filetype off		" necessary to make ftdetect work on Linux
-syntax on
+let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
+
+set t_Co=256		" enable 256 colors
+colorscheme torte
+syntax on			" syntax highlight
+"filetype off		" necessary to make ftdetect work on Linux
 filetype on			" Enable filetype detection
 filetype indent on	" Enable filetype-specific indenting
 filetype plugin on	" Enable filetype-specific plugins
@@ -38,18 +49,18 @@ filetype plugin on	" Enable filetype-specific plugins
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
-"  For pathogen.vim: auto load all plugins in .vim/bundle
+" For pathogen.vim: auto load all plugins in .vim/bundle
 call pathogen#runtime_append_all_bundles()
 "call pathogen#helptags()
 
-syntax on			" syntax highlight
-
+" use fancy symbols in Powerline
+let g:Powerline_symbols = 'fancy'
 
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
-map <F5> :GundoToggle<CR>
+map <F5> :NERDTree<CR>
+map <F4> :GundoToggle<CR>
 
-colorscheme koehler
 
