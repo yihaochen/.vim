@@ -18,7 +18,8 @@ set ignorecase		" ignore case when searching
 set smartcase		" ignore case if search pattrn is all lowercase,case-sensitive otherwise
 
 set hlsearch						" search highlighting
-set clipboard=unnamed				" yank to the system register (*) by default
+"set clipboard=unnamed				" yank to the system register (*) by default
+"set clipboard=unnamedplus			" yank to the X11 system register (+) by default, works only if '+xterm_clipboard' shows up in 'vim --version'
 set showmatch						" Cursor shows matching ) and }
 set showmode						" Show current mode
 set wildchar=<TAB>					" start wild expansion (auto-completioin of filename) in the command line using <TAB>
@@ -31,6 +32,20 @@ nnoremap <space> za
 "vnoremap <space> zf
 
 let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
+
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+let g:Tex_DefaultTargetFormat = 'pdf'	" vim-latex default target 
+
 
 set t_Co=256		" enable 256 colors
 colorscheme torte
@@ -85,7 +100,7 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 map <F2> :set number! number?<CR>
 map <F4> :GundoToggle<CR>
-map <F5> :NERDTree<CR>
+map <F3> :NERDTree<CR>
 map <F8> :call ColorColumn()<CR>
 
 
