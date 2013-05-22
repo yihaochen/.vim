@@ -1,9 +1,14 @@
+" ----------------------------------------------------------------------------
+" basic settings
+" ----------------------------------------------------------------------------
 set nocompatible	" not compatible with the old-fashion vi mode
 set encoding=utf-8
 set backspace=2		" allow backspacing over everything in insert mode
-set history=50		" keep 50 lines of command line history
+set history=100		" keep 100 lines of command line history
 set ruler			" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
+set hidden			" hide the buffer instead of closing it
+set title			" change the terminal title
 
 set tabstop=4		" use # of chars to display a <TAB> 
 set shiftwidth=4	" insert # of chars in autoindent
@@ -24,28 +29,9 @@ set showmatch						" Cursor shows matching ) and }
 set showmode						" Show current mode
 set wildchar=<TAB>					" start wild expansion (auto-completioin of filename) in the command line using <TAB>
 set wildmenu						" wild char completion menu
-set wildignore=*.o,*.class,*.pyc	" ignore these files while expanding wild chars
 
-" in normal mode open and close a fold with spacebar
-nnoremap <space> za
-" in visual mode open and close a fold with spacebar
-"vnoremap <space> zf
-
-let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
-
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-let g:Tex_DefaultTargetFormat = 'pdf'	" vim-latex default target 
-
+" ignore these files while expanding wild chars
+set wildignore=*.o,*.class,*.pyc,*.swp,*.bak	
 
 set t_Co=256		" enable 256 colors
 colorscheme torte
@@ -62,18 +48,12 @@ autocmd FileType python set expandtab				" insert spaces instead of <TAB>
 autocmd FileType c,cpp set foldmethod=syntax
 autocmd FileType c,cpp set foldnestmax=2
 
-" auto reload vimrc when editing it
-autocmd! bufwritepost .vimrc source ~/.vimrc
+" Auto reload vimrc when editing it. Change 'vimrc' to '*' for all other files
+" (only during the test, otherwise vim reads the vimrc everytime when saving.)
+" You can also use command :so(urce) $MYVIMRC to reload.
+autocmd! Bufwritepost vimrc source $MYVIMRC
 
-" For pathogen.vim: auto load all plugins in .vim/bundle
-call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
-
-" use fancy symbols in Powerline
-let g:Powerline_symbols = 'fancy'
-
-
-" A Vim function i use to easily toggle colorcolumn on and off.
+" A Vim function to easily toggle colorcolumn on and off.
 " (from ggustafsson http://gist.github.com/1766741)
 "
 "  " If colorcolumn is off and textwidth is set the use colorcolumn=+1.
@@ -94,13 +74,64 @@ function! ColorColumn()
 	endif
 endfunction
 
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+
+" ----------------------------------------------------------------------------
+" plug-in settings
+" ----------------------------------------------------------------------------
+let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
+
+" -------------------- vim-latex --------------------
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_ViewRule_pdf = 'okular'
+let g:Tex_MultipleComplileFormats = 'pdf'
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+" -------------------- pathogen --------------------
+" For pathogen.vim: auto load all plugins in .vim/bundle
+call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
+
+" -------------------- powerline --------------------
+" use fancy symbols in Powerline
+let g:Powerline_symbols = 'fancy'
+
+
+" ----------------------------------------------------------------------------
+" mapping keys
+" ----------------------------------------------------------------------------
+nnoremap ; :
+" remove highlight search
+nmap <silent> ,/ :nohlsearch<CR>
+" graphic move of the cursor for long line wrapping
+nnoremap <down> gj
+nnoremap <up> gk
+map <c-down> <c-w>j
+map <c-up> <c-w>k
+map <c-right> <c-w>l
+map <c-left> <c-w>h
+"map <c-j> <c-w>j
+"map <c-k> <c-w>k
+"map <c-l> <c-w>l
+"map <c-h> <c-w>h
+
+" in normal mode open and close a fold with spacebar
+nnoremap <space> za
+" in visual mode open and close a fold with spacebar
+"vnoremap <space> zf
+
 map <F2> :set number! number?<CR>
-map <F4> :GundoToggle<CR>
 map <F3> :NERDTree<CR>
+map <F4> :GundoToggle<CR>
 map <F8> :call ColorColumn()<CR>
+set pastetoggle=<F12>
 
 
