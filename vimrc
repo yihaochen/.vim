@@ -1,3 +1,8 @@
+" -------------------- pathogen --------------------
+" For pathogen.vim: auto load all plugins in .vim/bundle
+call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
+
 " ----------------------------------------------------------------------------
 " basic settings
 " ----------------------------------------------------------------------------
@@ -82,8 +87,8 @@ let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
 
 " -------------------- vim-latex --------------------
 let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_ViewRule_pdf = 'okular'
-let g:Tex_MultipleComplileFormats = 'pdf'
+let g:Tex_ViewRule_pdf = 'okular --unique'
+let g:Tex_MultipleCompileFormats = 'pdf'
 
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
@@ -94,11 +99,6 @@ set grepprg=grep\ -nH\ $*
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
-
-" -------------------- pathogen --------------------
-" For pathogen.vim: auto load all plugins in .vim/bundle
-call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
 
 " -------------------- powerline --------------------
 " use fancy symbols in Powerline
@@ -114,14 +114,17 @@ nmap <silent> ,/ :nohlsearch<CR>
 " graphic move of the cursor for long line wrapping
 nnoremap <down> gj
 nnoremap <up> gk
-map <c-down> <c-w>j
-map <c-up> <c-w>k
-map <c-right> <c-w>l
-map <c-left> <c-w>h
-"map <c-j> <c-w>j
-"map <c-k> <c-w>k
-"map <c-l> <c-w>l
-"map <c-h> <c-w>h
+"noremap <c-down> <c-w>j
+"noremap <c-up> <c-w>k
+"noremap <c-right> <c-w>l
+"noremap <c-left> <c-w>h
+" To prevent latex-suite mapping <c-j> (<c-j> still jumps to next place holder
+" in insert mode.)
+map <c-space> <Plug>IMAP_JumpForward
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
 
 " in normal mode open and close a fold with spacebar
 nnoremap <space> za
