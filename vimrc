@@ -86,6 +86,7 @@ endfunction
 let python_highlight_all = 1		" hight all syntax, see 'syntax/python.vim'
 
 " -------------------- vim-latex --------------------
+let g:Tex_CompileRule_pdf = 'pdflatex'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ViewRule_pdf = 'okular --unique'
 let g:Tex_MultipleCompileFormats = 'pdf'
@@ -132,7 +133,7 @@ nnoremap <space> za
 "vnoremap <space> zf
 
 map <F2> :set number! number?<CR>
-map <F3> :NERDTree<CR>
+map <F3> :NERDTreeToggle<CR>
 map <F4> :GundoToggle<CR>
 map <F8> :call ColorColumn()<CR>
 set pastetoggle=<F12>
