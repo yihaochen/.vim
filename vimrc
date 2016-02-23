@@ -53,7 +53,7 @@ autocmd FileType python set expandtab				" insert spaces instead of <TAB>
 autocmd FileType c,cpp set foldmethod=syntax
 autocmd FileType c,cpp set foldnestmax=2
 
-" Auto reload vimrc when editing it. Change 'vimrc' to '*' for all other files
+" Auto reload vimrc when editing it. Change 'vimrc' to '*' for all other files dfdfasdfadfafda
 " (only during the test, otherwise vim reads the vimrc everytime when saving.)
 " You can also use command :so(urce) $MYVIMRC to reload.
 autocmd! Bufwritepost vimrc source $MYVIMRC
@@ -64,18 +64,29 @@ autocmd! Bufwritepost vimrc source $MYVIMRC
 "  " If colorcolumn is off and textwidth is set the use colorcolumn=+1.
 "  " If colorcolumn is off and textwidth is not set then use colorcolumn=80.
 "  " If colorcolumn is on then turn it off.
+let s:matched = 0
 function! ColorColumn()
-	if empty(&colorcolumn)
-		if empty(&textwidth)
-			echo "colorcolumn=80"
-			setlocal colorcolumn=80
+	if exists('+colorcolumn')
+		if empty(&colorcolumn)
+			if empty(&textwidth)
+				echo "colorcolumn=80"
+				setlocal colorcolumn=80
+			else
+				echo "colorcolumn=+1 (" . (&textwidth + 1) . ")"
+				setlocal colorcolumn=+1
+			endif
 		else
-			echo "colorcolumn=+1 (" . (&textwidth + 1) . ")"
-			setlocal colorcolumn=+1
+			echo "colorcolumn="
+			setlocal colorcolumn=
 		endif
 	else
-		echo "colorcolumn="
-		setlocal colorcolumn=
+		if s:matched == 0
+			match ErrorMsg '\%>80v.\+'
+			let s:matched = 1
+		else
+			match none
+			let s:matched = 0
+		endif
 	endif
 endfunction
 
