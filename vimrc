@@ -1,6 +1,6 @@
 " -------------------- pathogen --------------------
 " For pathogen.vim: auto load all plugins in .vim/bundle
-call pathogen#runtime_append_all_bundles()
+execute pathogen#infect()
 "call pathogen#helptags()
 
 " ----------------------------------------------------------------------------
@@ -142,6 +142,9 @@ map <c-h> <c-w>h
 nnoremap <space> za
 " in visual mode open and close a fold with spacebar
 "vnoremap <space> zf
+"
+
+let g:gundo_prefer_python3 = 1          " anything else breaks on Ubuntu 16.04+
 
 map <F2> :set number! number?<CR>
 map <F3> :NERDTreeToggle<CR>
